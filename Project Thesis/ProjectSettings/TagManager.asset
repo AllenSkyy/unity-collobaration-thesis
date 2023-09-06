@@ -50,3 +50,6 @@ TagManager:
   - name: Child
     uniqueID: 3158937213
     locked: 0
+  - name: Obstacle
+    uniqueID: 2001150611
+    locked: 0
