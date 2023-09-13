@@ -4,21 +4,37 @@ using UnityEngine;
 
 public class Child_Movement : MonoBehaviour
 {
-    public GameObject pointA;
-    private Rigidbody2D rb;
-    private Transform currentPoint;
-    // Start is called before the first frame update
-    void Start()
+    public LayerMask scaleLayer;
+    float moveSpeed = 0.1f;
+    /*IEnumerator Move(Vector2 moveVec)
     {
-        rb = GetComponent<Rigidbody2D>();
-        currentPoint = transform.position;
-    }
+        animator.MoveX = moveVec.x;
+        animator.MoveY = moveVec.y;
 
-    // Update is called once per frame
-    void Update()
+        var targetPos = transform.position;
+        targetPos.x += moveVec.x;
+        targetPos.y += moveVec.y;
+
+        isMoving = true;
+
+        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = targetPos;
+
+        isMoving = false;
+
+        CheckForEncounters();
+    }*/
+
+
+    private void CheckForEncounters()
     {
-        Vector2 point = currentPoint.position - transform.position
+        if(Physics2D.OverlapCircle(transform.position, 0.2f, scaleLayer) != null)
+        {
+            
+        }
     }
-
-    
 }
