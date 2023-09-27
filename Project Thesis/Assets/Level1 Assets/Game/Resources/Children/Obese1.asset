@@ -14,10 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: 
   note: 
-  frontSprite: {fileID: 0}
-  leftSprite: {fileID: 1601337225, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
-  type: 2
-  Age: 0
-  Height: 0
-  Weight: 0
-  BMI: 0
+  frontSprite:
+  - {fileID: -674847993, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  - {fileID: 1985750124, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  - {fileID: 629947830, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  - {fileID: -223657146, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  leftSprite:
+  - {fileID: 1107838353, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  - {fileID: 1601337225, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  - {fileID: -1133375181, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  - {fileID: 17591905, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
+  type: 0
+  height: 0
+  weight: 0
+  bmi: 0
