@@ -12,12 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4379070b40428b345b18ad1d347e3f9e, type: 3}
   m_Name: Healthy1
   m_EditorClassIdentifier: 
-  name: Teddy
+  name: 
   note: 
-  frontSprite: {fileID: 0}
-  leftSprite: {fileID: -1828264524, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  frontSprite:
+  - {fileID: -275191245, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  - {fileID: -1839220206, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  - {fileID: -2050825023, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  - {fileID: -428089458, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  leftSprite:
+  - {fileID: 1328271055, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  - {fileID: -1828264524, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  - {fileID: -1696982178, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
+  - {fileID: -652361360, guid: b44c40ad9571ae14bb5afb5e417da467, type: 3}
   type: 1
-  Age: 0
-  Height: 0
-  Weight: 0
-  BMI: 0
+  height: 0
+  weight: 0
+  bmi: 0
