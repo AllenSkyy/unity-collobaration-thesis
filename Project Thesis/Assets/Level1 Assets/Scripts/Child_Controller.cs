@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Child_Controller : MonoBehaviour
 {
-    //[SerializeField] private LayerMask scaleLayer;
 
     private Character_Controller character;
 
@@ -12,21 +11,30 @@ public class Child_Controller : MonoBehaviour
     private void Awake()
     {
         character = GetComponent<Character_Controller>();
-        Walk();
         
+    }
+
+    private void Start()
+    {
+        Walk(-9);
     }
 
     private void Update()
     {
-        
-
-        //StartCoroutine(character.Move(new Vector2(-1, 0)));
         character.HandleUpdate();
     }
 
-   public void Walk()
+    public void Walk(int steps)
     {
-       StartCoroutine(character.Move(new Vector2(-13, 0)));
+       
+        StartCoroutine(character.Move(new Vector2(steps, 0)));
+        
+    }
+
+    public void randomWalk(int steps)
+    {
+        StartCoroutine(character.Move(new Vector2(steps, 0)));
+        StartCoroutine(character.Move(new Vector2(-steps, 0)));
     } 
   
 

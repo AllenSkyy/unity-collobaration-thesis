@@ -2,62 +2,59 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Menu_Controller : MonoBehaviour
 {
-    [SerializeField] GameObject menu;   
+    [SerializeField] GameObject menu;  
+    public Button HealthyButton, ObeseButton; 
 
     public event Action<int> onMenuSelected;
 
-    List<Text> menuItems; 
-
-    int selectedItem = 0;
-
     public Child_Controller child;
 
-    private void Awake()
+    /* private void Awake()
     {
-        menuItems = menu.GetComponentsInChildren<Text>().ToList();
+        HealthColors = HealthyButton.colors;
+        ObeseColors = ObeseButton.colors;
+    } */
+
+    void Start()
+    {
+        HealthyButton.onClick.AddListener(() => ButtonClicked(0, HealthyButton));
+        ObeseButton.onClick.AddListener(() => ButtonClicked(1, ObeseButton));
     }
 
     public void OpenMenu()
     {
         menu.SetActive(true);
-        UpdateItemSelection();
 
     }
 
-    public void HandleUpdate()
+     public void CloseMenu()
     {
-        int prevSelection = selectedItem;
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-            ++selectedItem;
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-            --selectedItem;
-
-        selectedItem = Mathf.Clamp(selectedItem, 0, menuItems.Count - 1);
-
-        if (prevSelection != selectedItem)
-            UpdateItemSelection();
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            onMenuSelected?.Invoke(selectedItem);
-            child.Walk();
-        }
+        menu.SetActive(false);
 
     }
 
-    void UpdateItemSelection()
+    public void ButtonOn()
     {
-        for (int i = 0; i < menuItems.Count; i++)
-        {
-            if(i == selectedItem)
-                menuItems[i].color = Global_Settings.i.HighlightedColor;
-            else
-                menuItems[i].color = Color.black;
-        }
+        HealthyButton.enabled = true;
+        ObeseButton.enabled = true;
     }
+
+    public void ButtonOff()
+    {
+        HealthyButton.enabled = false;
+        ObeseButton.enabled = false;
+    }
+
+   
+    void  ButtonClicked(int buttonNo, Button button)
+    {
+        onMenuSelected?.Invoke(buttonNo);
+    }
+
 }
