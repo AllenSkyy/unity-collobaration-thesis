@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Selectable
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -12,10 +11,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Scale
+  - 
   - Background
   - SolidObjects
-  - 
+  - Scale
   - 
   - 
   - 
@@ -50,7 +49,4 @@ TagManager:
     locked: 0
   - name: Child
     uniqueID: 3158937213
-    locked: 0
-  - name: Obstacle
-    uniqueID: 2001150611
     locked: 0
