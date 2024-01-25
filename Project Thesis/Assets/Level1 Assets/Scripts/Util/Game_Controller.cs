@@ -8,6 +8,7 @@ public class Game_Controller : MonoBehaviour
 {
     Menu_Controller menuController;
     [SerializeField] GameObject child;
+    [SerializeField] GameObject dialogue;
     float timer;
 
     public Child_Controller childcontrol;
@@ -28,6 +29,10 @@ public class Game_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!dialogue.activeSelf)
+        {
+            childcontrol.ActiveChild();
+        }
         
         if (Physics2D.OverlapCircle(child.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null)
         {

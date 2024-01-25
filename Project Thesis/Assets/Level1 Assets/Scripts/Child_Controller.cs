@@ -6,6 +6,7 @@ public class Child_Controller : MonoBehaviour
 {
 
     private Character_Controller character;
+    [SerializeField] GameObject child;
 
 
     private void Awake()
@@ -36,6 +37,16 @@ public class Child_Controller : MonoBehaviour
         StartCoroutine(character.Move(new Vector2(steps, 0)));
         StartCoroutine(character.Move(new Vector2(-steps, 0)));
     } 
+
+    public void ActiveChild()
+    {
+        child.SetActive(true);
+    }
+
+    public void DeactiveChild()
+    {
+        child.SetActive(false);
+    }
   
 
 }   

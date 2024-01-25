@@ -39,7 +39,7 @@ public class Dialogue : MonoBehaviour
         dialoguePanel.SetActive(true);
     }
 
-     public void CloseDialogue()
+    public void CloseDialogue()
     {
         dialoguePanel.SetActive(false);
     }
