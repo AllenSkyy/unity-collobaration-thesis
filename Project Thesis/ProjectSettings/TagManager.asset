@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - food
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -49,4 +51,7 @@ TagManager:
     locked: 0
   - name: Child
     uniqueID: 3158937213
+    locked: 0
+  - name: Player
+    uniqueID: 1793244197
     locked: 0
