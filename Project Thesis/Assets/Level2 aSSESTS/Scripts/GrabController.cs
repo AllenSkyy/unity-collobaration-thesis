@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GrabController : MonoBehaviour
 {
+    private Animator animator; // Animator reference
+
     public Transform grabDetectRight;
     public Transform grabDetectLeft;
     public Transform boxHolder;
@@ -11,11 +13,16 @@ public class GrabController : MonoBehaviour
 
     private bool isHolding = false;
     private Transform heldItem;
-    private float boxHolderOffsetX = -1.1f;
+    private float boxHolderOffsetX = -1.5f; // Adjusted box holder offset
     public bool isFacingRight = true;
     private bool isIdle = true;
-	
-	private int GetFoodType(GameObject foodObject)
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>(); // Get Animator component at start
+    }
+
+    private int GetFoodType(GameObject foodObject)
     {
         // Assuming you have attached the FoodController script to your food objects
         FoodController foodController = foodObject.GetComponent<FoodController>();
@@ -25,9 +32,6 @@ public class GrabController : MonoBehaviour
             // Access the food type from the FoodController
             int foodType = (int)foodController.foodType;
 
-            // Debug log for food type
-            Debug.Log($"Food type: {foodType}");
-
             return foodType;
         }
 
@@ -35,7 +39,7 @@ public class GrabController : MonoBehaviour
         return -1;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -44,14 +48,16 @@ public class GrabController : MonoBehaviour
                 if (isFacingRight && TryGrab(grabDetectRight, Vector2.right))
                 {
                     isHolding = true;
-                    SetBoxHolderOffsetX(-1.1f); // Set the X offset for boxHolder to the left
                     SetBoxPosition();
+                    animator.SetBool("GrabR", true);
+                    animator.SetBool("GrabL", false);
                 }
                 else if (!isFacingRight && TryGrab(grabDetectLeft, Vector2.left))
                 {
                     isHolding = true;
-                    SetBoxHolderOffsetX(-1.1f); // Set the X offset for boxHolder to the right
                     SetBoxPosition();
+                    animator.SetBool("GrabL", true);
+                    animator.SetBool("GrabR", false);
                 }
             }
             else
@@ -62,38 +68,25 @@ public class GrabController : MonoBehaviour
 
         if (isHolding && heldItem != null)
         {
-			// Call the GetFoodType function and pass the held food object
-     	   int foodType = GetFoodType(heldItem.gameObject);
+            int foodType = GetFoodType(heldItem.gameObject);
 
-		
             float xOffset = isFacingRight ? -boxHolderOffsetX : boxHolderOffsetX;
             Vector3 newPosition = transform.position + new Vector3(xOffset, -0.2f, 0.0f);
             heldItem.position = newPosition;
-        }
 
-        if (boxHolder != null)
-        {
-            // Adjust boxHolder position based on facing direction, but only if not idle
-            if (!isIdle)
-            {
-                SetBoxPosition();
-            }
+            // Set the "GrabTrue" parameter in the Animator
+           
         }
     }
 
-    void SetBoxHolderOffsetX(float offsetX)
+    private void SetBoxPosition()
     {
-        boxHolderOffsetX = offsetX;
-    }
-
-    void SetBoxPosition()
-    {
-        float boxHolderX = isFacingRight ? -1.1f : 1.1f;
+        float boxHolderX = isFacingRight ? -1.5f : 1.5f; // Adjusted box holder position
         Vector3 boxHolderPosition = new Vector3(transform.position.x + boxHolderX, transform.position.y - 0.2f, 0.0f);
         boxHolder.position = boxHolderPosition;
     }
 
-    bool TryGrab(Transform grabDetector, Vector2 direction)
+    private bool TryGrab(Transform grabDetector, Vector2 direction)
     {
         RaycastHit2D grabCheck = Physics2D.Raycast(grabDetector.position, direction * rayDist);
 
@@ -120,6 +113,8 @@ public class GrabController : MonoBehaviour
             heldItem.GetComponent<Rigidbody2D>().isKinematic = false;
             heldItem = null;
             isHolding = false;
+            animator.SetBool("GrabL", false);
+            animator.SetBool("GrabR", false);
         }
     }
 }
