@@ -10,7 +10,7 @@ public class NewBehaviourScript : MonoBehaviour
     public bool isFacingRight = true;
 	public float moveSpeed = 5.0f;
 	
-	// Start is called before the first frame update
+
     void Start()
     {
         lastHorizontalInput = Input.GetAxis("Horizontal");
@@ -18,37 +18,39 @@ public class NewBehaviourScript : MonoBehaviour
 	
 	public bool GetIsFacingRight()
 	{
-    return isFacingRight;
+    	return isFacingRight;
 	}
 
     // Update is called once per frame
     void Update()
+{
+    float horizontalInput = Input.GetAxis("Horizontal");
+    float verticalInput = Input.GetAxis("Vertical");
+
+    
+
+    // Update the facing direction based on horizontal input
+    if (horizontalInput > 0)
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-		// Access isFacingRight from the GrabController script
-   		 bool isFacingRight = grabController.isFacingRight;
-		
-		// Update the facing direction based on horizontal input
-        if (horizontalInput > 0)
-        {
-            grabController.isFacingRight = true;
-        }
-        else if (horizontalInput < 0)
-        {
-            grabController.isFacingRight = false;
-        }
+        isFacingRight = true;
+    }
+    else if (horizontalInput < 0)
+    {
+        isFacingRight = false;
+    }
 
-        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0.0f);
-		// Multiply the movement vector by the speed factor
-        Vector3 newPosition = transform.position + movement * moveSpeed * Time.deltaTime;
+    // Set the facing direction in the GrabController script
+    grabController.isFacingRight = isFacingRight;
 
-        // Update position
-        transform.position = newPosition;
+    Vector3 movement = new Vector3(horizontalInput, verticalInput, 0.0f);
+    // Multiply the movement vector by the speed factor
+    Vector3 newPosition = transform.position + movement * moveSpeed * Time.deltaTime;
 
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Magnitude", movement.magnitude);
-        //transform.position = transform.position + movement * Time.deltaTime;
+    // Update position
+    transform.position = newPosition;
+
+    animator.SetFloat("Horizontal", movement.x);
+    animator.SetFloat("Vertical", movement.y);
+    animator.SetFloat("Magnitude", movement.magnitude);
     }
 }

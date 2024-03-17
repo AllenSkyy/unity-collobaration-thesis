@@ -6,6 +6,8 @@ TagManager:
   tags:
   - food
   - Wall
+  - bshield
+  - trash
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - M
   - 
   - 
   - 
@@ -51,6 +53,9 @@ TagManager:
     locked: 0
   - name: Child
     uniqueID: 3158937213
+    locked: 0
+  - name: CARRY
+    uniqueID: 2833856217
     locked: 0
   - name: Player
     uniqueID: 1793244197

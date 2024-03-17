@@ -9,6 +9,8 @@ public class GrabController : MonoBehaviour
     public Transform boxHolder;
     public float rayDist;
 
+    private Animator animator;
+
     private bool isHolding = false;
     private Transform heldItem;
     private float boxHolderOffsetX = -1.1f;
@@ -37,6 +39,10 @@ public class GrabController : MonoBehaviour
 
     void Update()
     {
+        // Set GrabR and GrabL parameters based on facing direction and holding state
+        animator.SetBool("GrabR", isFacingRight && isHolding);
+        animator.SetBool("GrabL", !isFacingRight && isHolding);   
+        
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (!isHolding)
@@ -46,12 +52,14 @@ public class GrabController : MonoBehaviour
                     isHolding = true;
                     SetBoxHolderOffsetX(-1.1f); // Set the X offset for boxHolder to the left
                     SetBoxPosition();
+                    animator.SetBool("grabber", true); // Set grabber to true when holding something
                 }
                 else if (!isFacingRight && TryGrab(grabDetectLeft, Vector2.left))
                 {
                     isHolding = true;
                     SetBoxHolderOffsetX(-1.1f); // Set the X offset for boxHolder to the right
                     SetBoxPosition();
+                    animator.SetBool("grabber", true); // Set grabber to true when holding something
                 }
             }
             else
@@ -120,6 +128,9 @@ public class GrabController : MonoBehaviour
             heldItem.GetComponent<Rigidbody2D>().isKinematic = false;
             heldItem = null;
             isHolding = false;
+            animator.SetBool("grabber", false); // Set grabber to false when dropping something
+            animator.SetBool("GrabR", false);
+            animator.SetBool("GrabL", false);
         }
     }
 }
