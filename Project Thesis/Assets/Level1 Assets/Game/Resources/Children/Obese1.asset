@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 1601337225, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
   - {fileID: -1133375181, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
   - {fileID: 17591905, guid: 42cfb4102e8db4e49bd7669a4d2efdc1, type: 3}
-  type: 0
+  type: 2
   height: 0
   weight: 0
   bmi: 0
