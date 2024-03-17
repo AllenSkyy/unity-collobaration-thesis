@@ -3077,6 +3077,7 @@ GameObject:
   - component: {fileID: 1623431459}
   - component: {fileID: 1623431460}
   - component: {fileID: 1623431461}
+  - component: {fileID: 1623431462}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3179,6 +3180,19 @@ MonoBehaviour:
   timerText: {fileID: 1221887405}
   dialogue1: {fileID: 428183487}
   remainingTime: 135
+--- !u!114 &1623431462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623431454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e94546e4e304440ba92fb7b516c861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Weight_to_Height: {fileID: 4900000, guid: 4688167441b487b46a4263e93c7f181f, type: 3}
 --- !u!1 &1724628740
 GameObject:
   m_ObjectHideFlags: 0
