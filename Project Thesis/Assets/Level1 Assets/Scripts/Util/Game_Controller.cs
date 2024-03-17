@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum GameState {noState, Weighing}
+public enum GameState {noState, Weighing, Weighed}
 public class Game_Controller : MonoBehaviour
 {
     Menu_Controller menuController;
+    HeightWeightGenerator heightWeightGenerator;
     [SerializeField] GameObject child;
     [SerializeField] GameObject dialogue;
     float timer;
@@ -18,12 +19,15 @@ public class Game_Controller : MonoBehaviour
     {
         menuController = GetComponent<Menu_Controller>();
         childcontrol = child.GetComponent<Child_Controller>();
+        heightWeightGenerator = GetComponent<HeightWeightGenerator>();
     }
     
     // Start is called before the first frame update
     void Start()
     {
         menuController.onMenuSelected += onMenuSelected;
+        menuController.ButtonOff();
+        state = GameState.noState;
     }
 
     // Update is called once per frame
@@ -34,21 +38,16 @@ public class Game_Controller : MonoBehaviour
             childcontrol.ActiveChild();
         }
         
-        if (Physics2D.OverlapCircle(child.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null)
+        if (Physics2D.OverlapCircle(child.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
         {
             menuController.OpenMenu();
             //menuController.ButtonOn();
             state = GameState.Weighing;
         }
-        else if (Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null)
+        else if (newChild != null && Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
         {
             //menuController.ButtonOn();
             state = GameState.Weighing;
-        }
-        else
-        {
-            state = GameState.noState;
-            menuController.ButtonOff();
         }
 
         if (state == GameState.Weighing)
@@ -58,19 +57,13 @@ public class Game_Controller : MonoBehaviour
             if(seconds == 5)
             {
                 menuController.ButtonOn();
-                state = GameState.noState;
+                heightWeightGenerator.GenerateRandomNumberForHeight();
+                state = GameState.Weighed;
                 timer = 0;
             }
-            /* else
-            {
-                if(Random.Range(1, 4) == 3)
-                {
-                    childcontrol.randomWalk(5);
-                }
-                
-            } */
-            //menuController.HandleUpdate();
         }
+
+        Debug.Log("State is: " + state);
 
     }
 
@@ -87,6 +80,9 @@ public class Game_Controller : MonoBehaviour
             Debug.Log("You have marked this child Obese!");
            
         }
+        heightWeightGenerator.ResetDisplay();
+        menuController.ButtonOff();
+        state = GameState.noState;
         childcontrol.Walk(-13);
         NewChild();
     }
