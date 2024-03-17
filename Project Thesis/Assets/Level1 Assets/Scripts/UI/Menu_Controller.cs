@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Menu_Controller : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class Menu_Controller : MonoBehaviour
     void  ButtonClicked(int buttonNo, Button button)
     {
         onMenuSelected?.Invoke(buttonNo);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
 }

@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class HeightWeightGenerator : MonoBehaviour
 {
     [SerializeField] TextAsset Weight_to_Height;
+    [SerializeField] TextMeshProUGUI  HeightDisplay;
+    [SerializeField] TextMeshProUGUI  WeightDisplay;
     private List<string> datarows = new List<string>();
     // Start is called before the first frame update
     void Start()
@@ -14,7 +17,6 @@ public class HeightWeightGenerator : MonoBehaviour
         {
             datarows.Add(row.Trim());
         }
-        GenerateRandomNumberForHeight();
     }
 
     // Update is called once per frame
@@ -38,7 +40,7 @@ public class HeightWeightGenerator : MonoBehaviour
         return randomHeight;
     }
 
-    void GenerateRandomNumberForHeight()
+    public void GenerateRandomNumberForHeight()
     {
         float randomHeight = SelectRandomHeight();
         List<string> validRows = new List<string>();
@@ -67,6 +69,8 @@ public class HeightWeightGenerator : MonoBehaviour
             // Output a random number from the range
             float randomNumber = Random.Range(minValue, maxValue);
             Debug.Log("Heigh: " + randomHeight);
+            DisplayHeight(randomHeight);
+            DisplayWeight(randomNumber);
 
             Debug.Log("Random number within range: " + randomNumber);
 
@@ -87,5 +91,22 @@ public class HeightWeightGenerator : MonoBehaviour
         {
             Debug.LogWarning("No data found for the specified height: " + randomHeight);
         }
+    }
+
+    void DisplayHeight(float Height)
+    {
+        HeightDisplay.text = Height.ToString() +"cm";
+    }
+
+    void DisplayWeight(float Weight)
+    {
+        string formattedNumber = Weight.ToString("F2");
+        WeightDisplay.text = formattedNumber + "kg";
+    }
+
+    public void ResetDisplay()
+    {
+        HeightDisplay.text = "";
+        WeightDisplay.text = "";
     }
 }
