@@ -1,34 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RemoveScript : MonoBehaviour
 {
-    public int requiredPresses = 5; // Number of presses required to remove the object
-    public float pressCooldown = 0.5f; // Cooldown period between key presses in seconds
+    public Sprite[] obstacleSprites; // Array of sprites representing different stages of obstacle unfolding
+    public int requiredPresses = 5;
+    public float pressCooldown = 0.5f;
 
-    private int currentPresses = 0; // Counter for the number of presses
-    private float lastPressTime; // Timestamp of the last key press
-    private bool playerInsideCollider = false; // Flag to track if the player is inside the collider
+    private int currentPresses = 0;
+    private bool playerInsideCollider = false;
+    private bool fullyInteracted = false;
+    private float lastPressTime;
 
     void Update()
     {
-        // Check for key press in Update
-        if (Input.GetKeyDown(KeyCode.E) && playerInsideCollider)
+        if (!fullyInteracted && Input.GetKeyDown(KeyCode.E) && playerInsideCollider)
         {
             if (Time.time - lastPressTime > pressCooldown)
             {
                 lastPressTime = Time.time;
-                currentPresses++; // Increment the counter
-                Debug.Log("Press count: " + currentPresses + " / " + requiredPresses); // Log the counter
+                currentPresses++;
+                Debug.Log("Press count: " + currentPresses + " / " + requiredPresses);
+
+                // Advance to the next stage of the obstacle unfolding
+                if (currentPresses <= requiredPresses)
+                {
+                    GetComponent<SpriteRenderer>().sprite = obstacleSprites[currentPresses];
+                }
 
                 if (currentPresses >= requiredPresses)
                 {
-                    // Deactivate the object
-                    gameObject.SetActive(false);
+                    // Handle obstacle removal or any other action
+                    Debug.Log("Obstacle fully interacted.");
+                    fullyInteracted = true;
 
-                    // Or, destroy the object
-                    // Destroy(gameObject);
+                    // Remove the Rigidbody component
+                    Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
+                    if (rigidBody != null)
+                    {
+                        Destroy(rigidBody);
+                        Debug.Log("Rigidbody removed.");
+                    }
+
+                    // Disable the Collider component
+                    Collider2D collider = GetComponent<Collider2D>();
+                    if (collider != null)
+                    {
+                        collider.enabled = false;
+                        Debug.Log("Collider disabled.");
+                    }
                 }
             }
         }
@@ -39,7 +58,10 @@ public class RemoveScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInsideCollider = true;
-            Debug.Log("Press 'E' to interact.");
+            if (!fullyInteracted)
+            {
+                Debug.Log("Press 'E' to interact.");
+            }
         }
     }
 
