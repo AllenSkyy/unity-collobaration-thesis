@@ -41,6 +41,10 @@ public class GrabController : MonoBehaviour
 
     private void Update()
     {
+        // Set GrabR and GrabL parameters based on facing direction and holding state
+        animator.SetBool("GrabR", isFacingRight && isHolding);
+        animator.SetBool("GrabL", !isFacingRight && isHolding);   
+        
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (!isHolding)
@@ -49,15 +53,13 @@ public class GrabController : MonoBehaviour
                 {
                     isHolding = true;
                     SetBoxPosition();
-                    animator.SetBool("GrabR", true);
-                    animator.SetBool("GrabL", false);
+                    animator.SetBool("grabber", true); // Set grabber to true when holding something
                 }
                 else if (!isFacingRight && TryGrab(grabDetectLeft, Vector2.left))
                 {
                     isHolding = true;
                     SetBoxPosition();
-                    animator.SetBool("GrabL", true);
-                    animator.SetBool("GrabR", false);
+                    animator.SetBool("grabber", true); // Set grabber to true when holding something
                 }
             }
             else
@@ -73,9 +75,6 @@ public class GrabController : MonoBehaviour
             float xOffset = isFacingRight ? -boxHolderOffsetX : boxHolderOffsetX;
             Vector3 newPosition = transform.position + new Vector3(xOffset, -0.2f, 0.0f);
             heldItem.position = newPosition;
-
-            // Set the "GrabTrue" parameter in the Animator
-           
         }
     }
 
@@ -113,8 +112,9 @@ public class GrabController : MonoBehaviour
             heldItem.GetComponent<Rigidbody2D>().isKinematic = false;
             heldItem = null;
             isHolding = false;
-            animator.SetBool("GrabL", false);
+            animator.SetBool("grabber", false); // Set grabber to false when dropping something
             animator.SetBool("GrabR", false);
+            animator.SetBool("GrabL", false);
         }
     }
 }
