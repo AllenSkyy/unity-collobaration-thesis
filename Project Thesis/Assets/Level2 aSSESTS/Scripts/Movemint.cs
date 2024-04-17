@@ -8,7 +8,7 @@ public class NewBehaviourScript : MonoBehaviour
     public GrabController grabController; // Reference to the GrabController script
 	private float lastHorizontalInput; // Store the last horizontal input
     public bool isFacingRight = true;
-	public float moveSpeed = 5.0f;
+	public float moveSpeed = 4.0f;
 	
 	// Start is called before the first frame update
     void Start()
