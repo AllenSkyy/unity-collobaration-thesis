@@ -41,12 +41,10 @@ public class Game_Controller : MonoBehaviour
         if (Physics2D.OverlapCircle(child.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
         {
             menuController.OpenMenu();
-            //menuController.ButtonOn();
             state = GameState.Weighing;
         }
         else if (newChild != null && Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
         {
-            //menuController.ButtonOn();
             state = GameState.Weighing;
         }
 
@@ -69,22 +67,41 @@ public class Game_Controller : MonoBehaviour
 
     void onMenuSelected(int selectedItem)
     {
-        if (selectedItem == 0)
+        if (selectedItem == 4)
         {
-            //Healthy
-            Debug.Log("You have marked this child healthy!");
-        }   
-        else if (selectedItem == 1)
-        {
-            //Obese
-            Debug.Log("You have marked this child Obese!");
-           
+            menuController.NextPage();
         }
-        heightWeightGenerator.ResetDisplay();
-        menuController.ButtonOff();
-        state = GameState.noState;
-        childcontrol.Walk(-13);
-        NewChild();
+        else if (selectedItem == 5)
+        {
+            menuController.PreviousPage();
+        }
+        else
+        {
+            if (selectedItem == 0)
+            {
+                //Healthy
+                Debug.Log("You have marked this child healthy!");
+            }   
+            else if (selectedItem == 1)
+            {
+                //Obese
+                Debug.Log("You have marked this child Obese!");
+            
+            }
+            else if (selectedItem == 2)
+            {
+                //Wasted
+                Debug.Log("You have marked this child Wasted");
+                
+            }
+            heightWeightGenerator.ResetDisplay();
+            menuController.ButtonOff();
+            state = GameState.noState;
+            childcontrol.Walk(-13);
+            NewChild();
+        }
+
+
     }
 
     void NewChild()
