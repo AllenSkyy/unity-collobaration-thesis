@@ -33,9 +33,16 @@ public class Game_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        int seconds = Mathf.FloorToInt(timer % 60); 
         if(!dialogue.activeSelf)
         {
             childcontrol.ActiveChild();
+        }
+
+        if(seconds == 50)
+        {
+            Debug.Log("Entering Difficulty 2");
         }
         
         if (Physics2D.OverlapCircle(child.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
@@ -50,15 +57,18 @@ public class Game_Controller : MonoBehaviour
 
         if (state == GameState.Weighing)
         {
-            timer += Time.deltaTime;
-            int seconds = Mathf.FloorToInt(timer % 60); 
-            if(seconds == 5)
-            {
-                menuController.ButtonOn();
-                heightWeightGenerator.GenerateRandomNumberForHeight();
-                state = GameState.Weighed;
-                timer = 0;
-            }
+            // timer += Time.deltaTime;
+            // int seconds = Mathf.FloorToInt(timer % 60); 
+            // if(seconds == 5)
+            // {
+            //     menuController.ButtonOn();
+            //     heightWeightGenerator.GenerateRandomNumberForHeight();
+            //     state = GameState.Weighed;
+            //     timer = 0;
+            // }
+            menuController.ButtonOn();
+            heightWeightGenerator.GenerateRandomNumberForHeight();
+            state = GameState.Weighed;
         }
 
         Debug.Log("State is: " + state);

@@ -9,7 +9,8 @@ using UnityEngine.EventSystems;
 
 public class Menu_Controller : MonoBehaviour
 {
-    [SerializeField] GameObject menu, cheatsheet1, NextButtonPanel, PreviousButtonPanel;  
+    [SerializeField] GameObject menu, cheatsheet1, cheatsheet2;
+    [SerializeField] GameObject NextButtonPanel, PreviousButtonPanel;  
     private float page = 1;
     public Button HealthyButton, ObeseButton, WastedButton; 
     public Button NextPageButton, PreviousPageButton;
@@ -36,10 +37,19 @@ public class Menu_Controller : MonoBehaviour
 
     public void NextPage()
     {
-       
-        cheatsheet1.SetActive(true);
-            //PreviousButtonPanel.SetActive(true);
-            //NextButtonPanel.SetActive(false);
+        if(page == 1)
+        {
+            cheatsheet2.SetActive(true);
+            PreviousButtonPanel.SetActive(true);
+            NextButtonPanel.SetActive(false);
+            page++;
+        }
+        // else if (page == 2)
+        // {
+        //     cheatsheet2.SetActive(true);
+        //     NextButtonPanel.SetActive(false);
+        //     page++;
+        // }
            
         
 
@@ -47,10 +57,19 @@ public class Menu_Controller : MonoBehaviour
 
     public void PreviousPage()
     {
-        
-        cheatsheet1.SetActive(false);
-            //PreviousButtonPanel.SetActive(false);
-           // NextButtonPanel.SetActive(true);
+        if(page == 2)
+        {
+            cheatsheet2.SetActive(false);
+            PreviousButtonPanel.SetActive(false);
+            NextButtonPanel.SetActive(true);
+            page--;
+        }
+        // else if (page == 3)
+        // {
+        //     cheatsheet2.SetActive(false);
+        //     NextButtonPanel.SetActive(true);
+        //     page--;
+        // }
        
 
     }
