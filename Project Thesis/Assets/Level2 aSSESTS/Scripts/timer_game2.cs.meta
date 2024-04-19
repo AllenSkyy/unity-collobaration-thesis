@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 8b623642d60c71e45a92f62a007e08ad
+guid: 7b2832f88cf08c1449779307cbbede11
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - correctFoodSound: {fileID: 8300000, guid: 8abdb4d0f7744214e92094cd351dedff, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
