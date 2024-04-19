@@ -68,7 +68,7 @@ public class HeightWeightGenerator : MonoBehaviour
 
             // Output a random number from the range
             float randomNumber = Random.Range(minValue, maxValue);
-            Debug.Log("Heigh: " + randomHeight);
+            Debug.Log("Height: " + randomHeight);
             DisplayHeight(randomHeight);
             DisplayWeight(randomNumber);
 
