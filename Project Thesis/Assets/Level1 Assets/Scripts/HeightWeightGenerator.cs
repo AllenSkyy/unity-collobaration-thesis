@@ -15,6 +15,11 @@ public class HeightWeightGenerator : MonoBehaviour
     [SerializeField] TextMeshProUGUI  MonthDisplay;
     private List<string> datarows = new List<string>();
     private List<string> datarows2 = new List<string>();
+
+    string answer;
+    bool stunted;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -106,14 +111,17 @@ public class HeightWeightGenerator : MonoBehaviour
             if (randomNumber <= float.Parse(values[3]))
             {
                 Debug.Log("This Child is Wasted");
+                setAnswer("Wasted");
             }
             else if (randomNumber >= float.Parse(values[5]))
             {
                 Debug.Log("This Child is Obese");
+                setAnswer("Obese");
             }
             else
             {
-                Debug.Log("This Child is Healthy");
+                Debug.Log("This Child is Normal");
+                setAnswer("Normal");
             }
         }
         else
@@ -174,14 +182,17 @@ public class HeightWeightGenerator : MonoBehaviour
             if (randomNumber <= float.Parse(values[3]))
             {
                 Debug.Log("This Child is Wasted");
+                setAnswer("Wasted");
             }
             else if (randomNumber >= float.Parse(values[5]))
             {
                 Debug.Log("This Child is Obese");
+                setAnswer("Obese");
             }
             else
             {
-                Debug.Log("This Child is Healthy");
+                Debug.Log("This Child is Normal");
+                setAnswer("Normal");
             }
         }
         else
@@ -204,7 +215,8 @@ public class HeightWeightGenerator : MonoBehaviour
             if(randomHeight < minheight)
             {
                 Debug.Log("This child is stunted");
-            }
+                setStunted(true);
+            }else{setStunted(false);}
 
         }
         
@@ -237,5 +249,24 @@ public class HeightWeightGenerator : MonoBehaviour
         WeightDisplay.text = "";
         YearDisplay.text = "";
         MonthDisplay.text = "";
+    }
+
+    void setAnswer(string ans)
+    {
+        answer = ans;
+    }
+
+    public string getAnswer()
+    {
+        return answer;
+    }
+
+    void setStunted(bool stun)
+    {
+        stunted = stun;
+    }
+    public bool isStunted()
+    {
+        return stunted;
     }
 }
