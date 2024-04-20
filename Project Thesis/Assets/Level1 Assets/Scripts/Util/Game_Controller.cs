@@ -11,8 +11,8 @@ public class Game_Controller : MonoBehaviour
     HeightWeightGenerator heightWeightGenerator;
     [SerializeField] GameObject child;
     [SerializeField] GameObject dialogue;
-    float timer;
-    int seconds;
+    float timer, timerForPhase3;
+    int seconds, secondsPhase3;
 
     public Child_Controller childcontrol;
     GameObject newChild;
@@ -40,16 +40,16 @@ public class Game_Controller : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        seconds = Mathf.FloorToInt(timer % 60); 
-        // if(!dialogue.activeSelf)
-        // {
-        //     childcontrol.ActiveChild();
-        // }
+        seconds = Mathf.FloorToInt(timer); 
 
+        
         if(phase == GamePhase.PhaseThree)
         {
             Debug.Log("Entering Difficulty 3");
-            GamePhase2();
+            timerForPhase3 += Time.deltaTime;
+            secondsPhase3 = Mathf.FloorToInt(timer % 60);
+            GamePhase3();
+
         }
         else if (phase == GamePhase.PhaseTwo)
         {
@@ -62,7 +62,8 @@ public class Game_Controller : MonoBehaviour
         }
         
 
-        Debug.Log("State is: " + state);
+        Debug.Log("Phase is: " + phase);
+        Debug.Log("Seconds are: " + seconds);
 
     }
 
@@ -80,15 +81,7 @@ public class Game_Controller : MonoBehaviour
 
         if (state == GameState.Weighing)
         {
-            // timer += Time.deltaTime;
-            // int seconds = Mathf.FloorToInt(timer % 60); 
-            // if(seconds == 5)
-            // {
-            //     menuController.ButtonOn();
-            //     heightWeightGenerator.GenerateRandomNumberForHeight();
-            //     state = GameState.Weighed;
-            //     timer = 0;
-            // }
+
             menuController.ButtonOn();
             heightWeightGenerator.GenerateRandomNumberForHeight();
             state = GameState.Weighed;
@@ -108,6 +101,39 @@ public class Game_Controller : MonoBehaviour
             menuController.ButtonOn();
             heightWeightGenerator.GenerateRandomNumberForHeightandAge();
             state = GameState.Weighed;
+        }
+
+    }
+
+    void GamePhase3()
+    {
+        if (newChild != null && Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
+        {
+            state = GameState.Weighing;
+        }
+
+        if (state == GameState.Weighing)
+        {
+            menuController.ButtonOn();
+            heightWeightGenerator.GenerateRandomNumberForHeightandAge();
+            state = GameState.Weighed;
+        }
+
+        // Check if 10 seconds have passed
+        if (timerForPhase3 >= 23)
+        {
+            // Move the child away from the scale
+            if (childcontrol != null)
+            {
+                childcontrol.Walk(-13); // Adjust this value as per your game's requirements
+            }
+
+            // Reset timer and other necessary variables
+            timerForPhase3 = 0;
+            heightWeightGenerator.ResetDisplay();
+            menuController.ButtonOff();
+            state = GameState.noState;
+            NewChild();
         }
 
     }
@@ -142,11 +168,11 @@ public class Game_Controller : MonoBehaviour
                 
             }
 
-            if(seconds > 200)
+            if(seconds >= 200)
             {
                 phase = GamePhase.PhaseThree;
             }
-            else if(seconds > 10)
+            else if(seconds >= 100)
             {
                 phase = GamePhase.PhaseTwo;
             }
