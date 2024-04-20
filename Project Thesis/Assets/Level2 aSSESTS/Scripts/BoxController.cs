@@ -49,7 +49,11 @@ public class BoxController : MonoBehaviour
             IsFilled = true;
             filledBoxCount++;
 
-            
+            // Play correct food sound
+              if (correctFoodSound != null && audioSource != null)
+              {
+                      audioSource.PlayOneShot(correctFoodSound);
+              }
 
             Destroy(foodObject);
 
