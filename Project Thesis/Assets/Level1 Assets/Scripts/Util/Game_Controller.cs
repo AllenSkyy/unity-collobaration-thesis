@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 public enum GameState {noState, Weighing, Weighed}
+public enum GamePhase {PhaseOne, PhaseTwo, PhaseThree}
 public class Game_Controller : MonoBehaviour
 {
     Menu_Controller menuController;
@@ -11,10 +12,13 @@ public class Game_Controller : MonoBehaviour
     [SerializeField] GameObject child;
     [SerializeField] GameObject dialogue;
     float timer;
+    int seconds;
 
     public Child_Controller childcontrol;
     GameObject newChild;
     GameState state;
+    GamePhase phase;
+
     private void Awake()
     {
         menuController = GetComponent<Menu_Controller>();
@@ -27,24 +31,43 @@ public class Game_Controller : MonoBehaviour
     {
         menuController.onMenuSelected += onMenuSelected;
         menuController.ButtonOff();
+        childcontrol.ActiveChild();
         state = GameState.noState;
+        phase = GamePhase.PhaseOne;
     }
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
-        int seconds = Mathf.FloorToInt(timer % 60); 
-        if(!dialogue.activeSelf)
-        {
-            childcontrol.ActiveChild();
-        }
+        seconds = Mathf.FloorToInt(timer % 60); 
+        // if(!dialogue.activeSelf)
+        // {
+        //     childcontrol.ActiveChild();
+        // }
 
-        if(seconds == 50)
+        if(phase == GamePhase.PhaseThree)
         {
-            Debug.Log("Entering Difficulty 2");
+            Debug.Log("Entering Difficulty 3");
+            GamePhase2();
+        }
+        else if (phase == GamePhase.PhaseTwo)
+        {
+            menuController.StartPhase2();
+            GamePhase2();
+        }
+        else
+        {
+            GamePhase1();
         }
         
+
+        Debug.Log("State is: " + state);
+
+    }
+
+    void GamePhase1()
+    {
         if (Physics2D.OverlapCircle(child.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
         {
             menuController.OpenMenu();
@@ -71,7 +94,21 @@ public class Game_Controller : MonoBehaviour
             state = GameState.Weighed;
         }
 
-        Debug.Log("State is: " + state);
+    }
+
+    void GamePhase2()
+    {
+        if (newChild != null && Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
+        {
+            state = GameState.Weighing;
+        }
+
+        if (state == GameState.Weighing)
+        {
+            menuController.ButtonOn();
+            heightWeightGenerator.GenerateRandomNumberForHeightandAge();
+            state = GameState.Weighed;
+        }
 
     }
 
@@ -104,13 +141,26 @@ public class Game_Controller : MonoBehaviour
                 Debug.Log("You have marked this child Wasted");
                 
             }
+
+            if(seconds > 200)
+            {
+                phase = GamePhase.PhaseThree;
+            }
+            else if(seconds > 10)
+            {
+                phase = GamePhase.PhaseTwo;
+            }
+
+            if (menuController.GetToggleValue() == 1)
+            {
+                Debug.Log("You have marked this child Stunted");
+            }
             heightWeightGenerator.ResetDisplay();
             menuController.ButtonOff();
             state = GameState.noState;
             childcontrol.Walk(-13);
             NewChild();
         }
-
 
     }
 
