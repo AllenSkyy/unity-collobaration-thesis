@@ -4,7 +4,7 @@ public class BoxController : MonoBehaviour
 {
     public FoodController.FoodType requiredFoodType;  
     public AudioClip correctFoodSound; // Assign the correct food sound effect in the Inspector
-    private bool isFilled = false;
+    public bool IsFilled { get; private set; } = false; 
     private static int filledBoxCount = 0;
     private const int totalBoxCount = 4;
 
@@ -46,7 +46,7 @@ public class BoxController : MonoBehaviour
         if (CheckDeliveredFood(deliveredFoodType))
         {
             Debug.Log("CORRECT FOOD TYPE");
-            isFilled = true;
+            IsFilled = true;
             filledBoxCount++;
 
             
@@ -56,7 +56,7 @@ public class BoxController : MonoBehaviour
             if (filledBoxCount == totalBoxCount)
             {
                 // All boxes are filled, trigger victory screen
-                Debug.Log("All boxes are filled! Trigger victory screen.");
+                Debug.Log("Nice");
                 // Implement logic to show the victory screen
             }
 
