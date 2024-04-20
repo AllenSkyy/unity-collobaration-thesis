@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 
 
 public enum GameState {noState, Weighing, Weighed}
-public enum GamePhase {PhaseOne, PhaseTwo, PhaseThree}
+public enum GamePhase {PhaseOne, PhaseTwo, PhaseThree, End}
 public class Game_Controller : MonoBehaviour
 {
     Menu_Controller menuController;
     HeightWeightGenerator heightWeightGenerator;
+    Score_Controller scoreController;
     [SerializeField] GameObject child;
     [SerializeField] GameObject dialogue;
     float timer, timerForPhase3;
@@ -24,6 +27,7 @@ public class Game_Controller : MonoBehaviour
         menuController = GetComponent<Menu_Controller>();
         childcontrol = child.GetComponent<Child_Controller>();
         heightWeightGenerator = GetComponent<HeightWeightGenerator>();
+        scoreController = GetComponent<Score_Controller>();
     }
     
     // Start is called before the first frame update
@@ -42,8 +46,11 @@ public class Game_Controller : MonoBehaviour
         timer += Time.deltaTime;
         seconds = Mathf.FloorToInt(timer); 
 
-        
-        if(phase == GamePhase.PhaseThree)
+        if(phase == GamePhase.End)
+        {
+            SceneManager.LoadSceneAsync(2);
+        }
+        else if(phase == GamePhase.PhaseThree)
         {
             Debug.Log("Entering Difficulty 3");
             timerForPhase3 += Time.deltaTime;
@@ -153,22 +160,28 @@ public class Game_Controller : MonoBehaviour
             if (selectedItem == 0)
             {
                 //Healthy
-                Debug.Log("You have marked this child healthy!");
+                Debug.Log("You have marked this child normal!");
+                checkAnswer("Normal");
             }   
             else if (selectedItem == 1)
             {
                 //Obese
                 Debug.Log("You have marked this child Obese!");
+                checkAnswer("Obese");
             
             }
             else if (selectedItem == 2)
             {
                 //Wasted
                 Debug.Log("You have marked this child Wasted");
+                checkAnswer("Wasted");
                 
             }
-
-            if(seconds >= 200)
+            if(seconds >= 300)
+            {
+                phase = GamePhase.End;
+            }
+            else if(seconds >= 200)
             {
                 phase = GamePhase.PhaseThree;
             }
@@ -180,7 +193,9 @@ public class Game_Controller : MonoBehaviour
             if (menuController.GetToggleValue() == 1)
             {
                 Debug.Log("You have marked this child Stunted");
-            }
+                checkStunted("marked");
+            }else{checkStunted("unmarked");}
+
             heightWeightGenerator.ResetDisplay();
             menuController.ButtonOff();
             state = GameState.noState;
@@ -200,5 +215,37 @@ public class Game_Controller : MonoBehaviour
 
         newChild = Instantiate(child, new Vector3(11.5f, -2.5f, 0f), Quaternion.identity);
         childcontrol = newChild.GetComponent<Child_Controller>();
+    }
+
+    void checkAnswer(string answer)
+    {
+        if(phase == GamePhase.PhaseOne || phase == GamePhase.PhaseTwo)
+        {
+            if(answer == heightWeightGenerator.getAnswer())
+            {
+                scoreController.addToScore(100);
+            }
+            scoreController.addToTotal(100);
+        }
+        else if (phase == GamePhase.PhaseThree)
+        {
+            if(answer == heightWeightGenerator.getAnswer())
+            {
+                scoreController.addToScore(200);
+            }
+            scoreController.addToTotal(200);
+        }
+    }
+
+    void checkStunted(string answer)
+    {
+        if(heightWeightGenerator.isStunted())
+        {
+            if(answer == "marked")
+            {
+                scoreController.addToScore(100);
+            }
+            scoreController.addToTotal(100);
+        }
     }
 }
