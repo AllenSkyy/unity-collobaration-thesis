@@ -4,17 +4,21 @@ using UnityEngine;
 
 
 public enum GameState {noState, Weighing, Weighed}
+public enum GamePhase {PhaseOne, PhaseTwo, PhaseThree}
 public class Game_Controller : MonoBehaviour
 {
     Menu_Controller menuController;
     HeightWeightGenerator heightWeightGenerator;
     [SerializeField] GameObject child;
     [SerializeField] GameObject dialogue;
-    float timer;
+    float timer, timerForPhase3;
+    int seconds, secondsPhase3;
 
     public Child_Controller childcontrol;
     GameObject newChild;
     GameState state;
+    GamePhase phase;
+
     private void Awake()
     {
         menuController = GetComponent<Menu_Controller>();
@@ -27,64 +31,163 @@ public class Game_Controller : MonoBehaviour
     {
         menuController.onMenuSelected += onMenuSelected;
         menuController.ButtonOff();
+        childcontrol.ActiveChild();
         state = GameState.noState;
+        phase = GamePhase.PhaseOne;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!dialogue.activeSelf)
+        timer += Time.deltaTime;
+        seconds = Mathf.FloorToInt(timer); 
+
+        
+        if(phase == GamePhase.PhaseThree)
         {
-            childcontrol.ActiveChild();
+            Debug.Log("Entering Difficulty 3");
+            timerForPhase3 += Time.deltaTime;
+            secondsPhase3 = Mathf.FloorToInt(timer % 60);
+            GamePhase3();
+
+        }
+        else if (phase == GamePhase.PhaseTwo)
+        {
+            menuController.StartPhase2();
+            GamePhase2();
+        }
+        else
+        {
+            GamePhase1();
         }
         
+
+        Debug.Log("Phase is: " + phase);
+        Debug.Log("Seconds are: " + seconds);
+
+    }
+
+    void GamePhase1()
+    {
         if (Physics2D.OverlapCircle(child.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
         {
             menuController.OpenMenu();
-            //menuController.ButtonOn();
             state = GameState.Weighing;
         }
         else if (newChild != null && Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
         {
-            //menuController.ButtonOn();
             state = GameState.Weighing;
         }
 
         if (state == GameState.Weighing)
         {
-            timer += Time.deltaTime;
-            int seconds = Mathf.FloorToInt(timer % 60); 
-            if(seconds == 5)
-            {
-                menuController.ButtonOn();
-                heightWeightGenerator.GenerateRandomNumberForHeight();
-                state = GameState.Weighed;
-                timer = 0;
-            }
+
+            menuController.ButtonOn();
+            heightWeightGenerator.GenerateRandomNumberForHeight();
+            state = GameState.Weighed;
         }
 
-        Debug.Log("State is: " + state);
+    }
+
+    void GamePhase2()
+    {
+        if (newChild != null && Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
+        {
+            state = GameState.Weighing;
+        }
+
+        if (state == GameState.Weighing)
+        {
+            menuController.ButtonOn();
+            heightWeightGenerator.GenerateRandomNumberForHeightandAge();
+            state = GameState.Weighed;
+        }
+
+    }
+
+    void GamePhase3()
+    {
+        if (newChild != null && Physics2D.OverlapCircle(newChild.transform.position, 0.2f, GameLayers.i.ScaleLayer) != null && state == GameState.noState)
+        {
+            state = GameState.Weighing;
+        }
+
+        if (state == GameState.Weighing)
+        {
+            menuController.ButtonOn();
+            heightWeightGenerator.GenerateRandomNumberForHeightandAge();
+            state = GameState.Weighed;
+        }
+
+        // Check if 10 seconds have passed
+        if (timerForPhase3 >= 23)
+        {
+            // Move the child away from the scale
+            if (childcontrol != null)
+            {
+                childcontrol.Walk(-13); // Adjust this value as per your game's requirements
+            }
+
+            // Reset timer and other necessary variables
+            timerForPhase3 = 0;
+            heightWeightGenerator.ResetDisplay();
+            menuController.ButtonOff();
+            state = GameState.noState;
+            NewChild();
+        }
 
     }
 
     void onMenuSelected(int selectedItem)
     {
-        if (selectedItem == 0)
+        if (selectedItem == 4)
         {
-            //Healthy
-            Debug.Log("You have marked this child healthy!");
-        }   
-        else if (selectedItem == 1)
-        {
-            //Obese
-            Debug.Log("You have marked this child Obese!");
-           
+            menuController.NextPage();
         }
-        heightWeightGenerator.ResetDisplay();
-        menuController.ButtonOff();
-        state = GameState.noState;
-        childcontrol.Walk(-13);
-        NewChild();
+        else if (selectedItem == 5)
+        {
+            menuController.PreviousPage();
+        }
+        else
+        {
+            if (selectedItem == 0)
+            {
+                //Healthy
+                Debug.Log("You have marked this child healthy!");
+            }   
+            else if (selectedItem == 1)
+            {
+                //Obese
+                Debug.Log("You have marked this child Obese!");
+            
+            }
+            else if (selectedItem == 2)
+            {
+                //Wasted
+                Debug.Log("You have marked this child Wasted");
+                
+            }
+
+            if(seconds >= 200)
+            {
+                phase = GamePhase.PhaseThree;
+            }
+            else if(seconds >= 100)
+            {
+                phase = GamePhase.PhaseTwo;
+            }
+
+            if (menuController.GetToggleValue() == 1)
+            {
+                Debug.Log("You have marked this child Stunted");
+            }
+            heightWeightGenerator.ResetDisplay();
+            menuController.ButtonOff();
+            state = GameState.noState;
+            childcontrol.Walk(-13);
+            NewChild();
+        }
+
     }
 
     void NewChild()
