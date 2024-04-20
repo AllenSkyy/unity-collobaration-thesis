@@ -9,9 +9,11 @@ using UnityEngine.EventSystems;
 
 public class Menu_Controller : MonoBehaviour
 {
-    [SerializeField] GameObject menu, cheatsheet1, cheatsheet2;
+    [SerializeField] GameObject menu, cheatsheet1, cheatsheet2, cheatsheet3;
     [SerializeField] GameObject NextButtonPanel, PreviousButtonPanel;  
+    [SerializeField] GameObject Info2, StuntedToggle;
     private float page = 1;
+    private float toggleValue = 0;
     public Button HealthyButton, ObeseButton, WastedButton; 
     public Button NextPageButton, PreviousPageButton;
 
@@ -41,15 +43,14 @@ public class Menu_Controller : MonoBehaviour
         {
             cheatsheet2.SetActive(true);
             PreviousButtonPanel.SetActive(true);
+            page++;
+        }
+        else if (page == 2)
+        {
+            cheatsheet3.SetActive(true);
             NextButtonPanel.SetActive(false);
             page++;
         }
-        // else if (page == 2)
-        // {
-        //     cheatsheet2.SetActive(true);
-        //     NextButtonPanel.SetActive(false);
-        //     page++;
-        // }
            
         
 
@@ -61,15 +62,14 @@ public class Menu_Controller : MonoBehaviour
         {
             cheatsheet2.SetActive(false);
             PreviousButtonPanel.SetActive(false);
+            page--;
+        }
+        else if (page == 3)
+        {
+            cheatsheet3.SetActive(false);
             NextButtonPanel.SetActive(true);
             page--;
         }
-        // else if (page == 3)
-        // {
-        //     cheatsheet2.SetActive(false);
-        //     NextButtonPanel.SetActive(true);
-        //     page--;
-        // }
        
 
     }
@@ -104,5 +104,29 @@ public class Menu_Controller : MonoBehaviour
         onMenuSelected?.Invoke(buttonNo);
         EventSystem.current.SetSelectedGameObject(null);
     }
+
+    //function for the start of Phase2
+    public void StartPhase2()
+    {
+        Info2.SetActive(true);
+        StuntedToggle.SetActive(true);
+    }
+
+    public void SetToggleValueNo()
+    {
+        toggleValue = 0;
+    }
+
+    public void SetToggleValueYes()
+    {
+        toggleValue = 1;
+    }
+
+
+    public float GetToggleValue()
+    {
+        return toggleValue;
+    }
+
 
 }
