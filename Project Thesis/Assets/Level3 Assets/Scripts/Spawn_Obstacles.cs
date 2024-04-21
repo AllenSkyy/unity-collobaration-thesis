@@ -43,4 +43,9 @@ public class Spawn_Obstacles : MonoBehaviour
             SpawnAlready = true;
         }
     }
+
+    public void Adjustimebetweenspawn(float time)
+    {
+        timeBetweenSpwan = time;
+    }
 }

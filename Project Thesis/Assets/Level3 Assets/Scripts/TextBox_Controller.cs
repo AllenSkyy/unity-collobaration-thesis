@@ -5,6 +5,10 @@ using UnityEngine;
 public class TextBox_Controller : MonoBehaviour
 {
     [SerializeField] GameObject DialoguePanel0, DialoguePanel1, DialoguePanel2, DialoguePanel3;
+    [SerializeField] GameObject spawnpoint;
+
+    Spawn_Obstacles spawnobstacles;
+    camMovement cam;
 
     float timer;
     int seconds, dialogueNum = 0;
@@ -15,7 +19,8 @@ public class TextBox_Controller : MonoBehaviour
      }
     void Start()
     {
-        
+        spawnobstacles = spawnpoint.GetComponent<Spawn_Obstacles>();
+        cam = GetComponent<camMovement>();
     }
 
     // Update is called once per frame
@@ -23,13 +28,19 @@ public class TextBox_Controller : MonoBehaviour
     {
         timer += Time.deltaTime;
         seconds = Mathf.FloorToInt(timer); 
-        if(dialogueNum < 3)
+        if(dialogueNum <= 3)
         {
-            if(seconds > 120){pauseGame();}
-            else if(seconds > 60){pauseGame();}
-            else if(seconds > 30){pauseGame();}
+            if(seconds > 300 && dialogueNum == 3){pauseGame();} // game ends
+            else if(seconds > 155 && dialogueNum == 2)
+            {
+                pauseGame();
+                spawnobstacles.Adjustimebetweenspawn(0.5f);
+                cam.AdjustCamSpeed();
+            } //obstacles appear more frequent and game gets faster
+            else if(seconds > 30 && dialogueNum == 1){pauseGame();} // obstacles appear
         }
         
+        Debug.Log("Seconds is " + seconds+ " dialoguenum is "+ dialogueNum);
     }
 
     public void pauseGame()
@@ -46,7 +57,7 @@ public class TextBox_Controller : MonoBehaviour
         if(dialogueNum == 0){DialoguePanel0.SetActive(false); dialogueNum++;}
         else if(dialogueNum == 1){DialoguePanel1.SetActive(false); dialogueNum++;}
         else if(dialogueNum == 2){DialoguePanel2.SetActive(false); dialogueNum++;}
-        else if(dialogueNum == 3){DialoguePanel2.SetActive(false); dialogueNum++;}
+        else if(dialogueNum == 3){DialoguePanel3.SetActive(false); dialogueNum++;}
         Time.timeScale = 1f;
     }
 }
