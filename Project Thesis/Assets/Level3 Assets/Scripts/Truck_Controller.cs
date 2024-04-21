@@ -20,6 +20,7 @@ public class Truck_Controller : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        scoreController.addToTotal(1000);
     }
 
     // Update is called once per frame
