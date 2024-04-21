@@ -230,11 +230,11 @@ public class Game_Controller : MonoBehaviour
             {
                 phase = GamePhase.End;
             }
-            else if(seconds >= 20)
+            else if(seconds >= 200)
             {
                 phase = GamePhase.PhaseThree;
             }
-            else if(seconds >= 10)
+            else if(seconds >= 100)
             {
                 phase = GamePhase.PhaseTwo;
             }
