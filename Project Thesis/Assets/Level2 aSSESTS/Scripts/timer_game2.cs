@@ -1,10 +1,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class timer_game2 : MonoBehaviour
 {
-    float countdown = 10;
+    float countdown = 90;
     public TMP_Text timerText;
     public TMP_Text scoreText;
 
@@ -12,17 +15,37 @@ public class timer_game2 : MonoBehaviour
     bool gameEnded = false;
 
     public GameObject gameOverUI;
+
+    public GameObject introUI;
+    public Text npctextbox;
+    public string[] dialogue;
+    private int index;
+    public float wordSpeed;
+
+    public GameObject Continue;
+    private bool introDialogueActive = true; // Track if intro dialogue is active
     
     void Start()
     {
         // Set the initial score text
         UpdateScoreText();
         gameOverUI.SetActive(false);
+        introUI.SetActive(true);
+		StartCoroutine(StartDialogue());
+			
+                
     }
+
+    
 
     void Update()
     {
-        if (!gameEnded)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+         // Call the NextLine function when spacebar is pressed
+                NextLine();
+        }
+        if (!introDialogueActive && !gameEnded)
         {
             countdown -= Time.deltaTime;
             double roundedCountdown = System.Math.Round(countdown, 2);
@@ -81,6 +104,32 @@ public class timer_game2 : MonoBehaviour
         return allFilled;
     }
 
+    public void zeroText(){
+		npctextbox.text ="";
+		index = 0;
+		
+	}
+
+    public void NextLine()
+{
+    Continue.SetActive(false);
+
+    if (index < dialogue.Length - 1)
+    {
+        index++;
+        npctextbox.text = "";
+        StartCoroutine(StartDialogue());
+        Continue.SetActive(true);
+    }
+    else
+    {
+        zeroText();
+        introUI.SetActive(false);
+        introDialogueActive = false;
+    }
+}
+
+
     void UpdateScoreText()
     {
         scoreText.text = $"Score: {score}";
@@ -95,8 +144,19 @@ public class timer_game2 : MonoBehaviour
         UpdateScoreText();
     }
 
+    IEnumerator StartDialogue(){
+		foreach(char letter in dialogue[index]. ToCharArray())
+		{
+			npctextbox.text += letter;
+            yield return new WaitForSeconds(wordSpeed);
+		}
+        
+	}
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    
 }
