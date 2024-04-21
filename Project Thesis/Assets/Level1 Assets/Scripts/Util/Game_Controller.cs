@@ -13,7 +13,7 @@ public class Game_Controller : MonoBehaviour
     HeightWeightGenerator heightWeightGenerator;
     Score_Controller scoreController;
     [SerializeField] GameObject child;
-    [SerializeField] GameObject dialogue;
+
     float timer, timerForPhase3;
     int seconds, secondsPhase3;
 

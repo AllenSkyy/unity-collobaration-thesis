@@ -12,8 +12,9 @@ public class game1 : MonoBehaviour
     public float wordSpeed;
 	public GameObject Continue;
 
-    // Update is called once per frame
+	[SerializeField] GameObject GameController;
 
+    // Update is called once per frame
 
 
 	void Start()
@@ -30,14 +31,13 @@ public class game1 : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Space))
         {
          // Call the NextLine function when spacebar is pressed
-                NextLine();
+            NextLine();
         }
         
     }
 	
 	public void NextLine(){
 	
-		Continue.SetActive(false);
 	
 		if(index< dialogue.Length -1)
 		{
@@ -54,6 +54,8 @@ public class game1 : MonoBehaviour
 		npctextbox.text ="";
 		index = 0;
 		Panel.SetActive(false);
+		Continue.SetActive(false);
+		GameController.SetActive(true);
 	}
 	
 	IEnumerator Typing(){

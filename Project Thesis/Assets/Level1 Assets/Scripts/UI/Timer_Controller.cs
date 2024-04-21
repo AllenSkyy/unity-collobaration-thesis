@@ -6,20 +6,15 @@ using TMPro;
 public class Timer_Controller : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] GameObject dialogue1;
+
     [SerializeField] float remainingTime;
 
     // Update is called once per frame
     void Update()
     {
-        if(dialogue1.activeSelf)
-        {
-            Pause(remainingTime);
-        }
-        else
-        {
-            Play();
-        }
+       
+        Play();
+    
     }
 
     private void Pause(float n)
