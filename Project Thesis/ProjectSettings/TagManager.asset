@@ -6,6 +6,9 @@ TagManager:
   tags:
   - food
   - Wall
+  - Border
+  - Obstacle
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -54,4 +57,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1793244197
+    locked: 0
+  - name: OnTheRoad
+    uniqueID: 628047735
     locked: 0
