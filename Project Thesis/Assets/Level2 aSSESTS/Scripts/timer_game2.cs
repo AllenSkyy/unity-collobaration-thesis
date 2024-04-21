@@ -11,16 +11,20 @@ public class timer_game2 : MonoBehaviour
     public TMP_Text timerText;
     public TMP_Text scoreText;
 
+    public TMP_Text WinText;
+
     int score = 0; // Variable to store the score
     bool gameEnded = false;
 
     public GameObject gameOverUI;
+     public GameObject WinUI;
 
     public GameObject introUI;
     public Text npctextbox;
     public string[] dialogue;
     private int index;
     public float wordSpeed;
+
 
     public GameObject Continue;
     private bool introDialogueActive = true; // Track if intro dialogue is active
@@ -30,6 +34,7 @@ public class timer_game2 : MonoBehaviour
         // Set the initial score text
         UpdateScoreText();
         gameOverUI.SetActive(false);
+        WinUI.SetActive(false);
         introUI.SetActive(true);
 		StartCoroutine(StartDialogue());
 			
@@ -57,6 +62,9 @@ public class timer_game2 : MonoBehaviour
                 gameEnded = true;
                 AddRemainingTimeToScore();
                 timerText.text = "0";
+                WinText.text = scoreText.text;
+                WinUI.SetActive(true);
+
                 // Stop the game or trigger victory screen
             }
             else if (countdown <= 0)
