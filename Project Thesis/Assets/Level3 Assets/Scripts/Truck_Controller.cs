@@ -9,6 +9,8 @@ public class Truck_Controller : MonoBehaviour
     private Vector2 truckDirection;
 
     Score_Controller scoreController;
+    [SerializeField] GameObject[] CheckpointDios;
+    private int dialogueNum = 0;
 
     private void Awake()
     {
@@ -25,6 +27,8 @@ public class Truck_Controller : MonoBehaviour
     {
         float directionY = Input.GetAxisRaw("Vertical");
         truckDirection = new Vector2(0, directionY).normalized;
+
+        Debug.Log("dialogue num for truck is " + dialogueNum);
     }
 
     void FixedUpdate()
@@ -37,10 +41,19 @@ public class Truck_Controller : MonoBehaviour
         if(collision.tag == "Checkpoint")
         {
             scoreController.addToScore(125);
+            CheckpointDios[dialogueNum].SetActive(true);
+            Time.timeScale = 0f;
         }
         else if(collision.tag == "Obstacle")
         {
             scoreController.addToScore(-25);
         }
+   }
+
+   public void resumeGame()
+   {
+        CheckpointDios[dialogueNum].SetActive(false);
+        dialogueNum++;
+        Time.timeScale = 1f;
    }
 }
