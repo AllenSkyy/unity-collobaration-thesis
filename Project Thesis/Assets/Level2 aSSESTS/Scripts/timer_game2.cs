@@ -1,18 +1,23 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class timer_game2 : MonoBehaviour
 {
-    float countdown = 90;
+    float countdown = 10;
     public TMP_Text timerText;
     public TMP_Text scoreText;
+
     int score = 0; // Variable to store the score
     bool gameEnded = false;
 
+    public GameObject gameOverUI;
+    
     void Start()
     {
         // Set the initial score text
         UpdateScoreText();
+        gameOverUI.SetActive(false);
     }
 
     void Update()
@@ -35,8 +40,11 @@ public class timer_game2 : MonoBehaviour
             {
                 Debug.Log("Game over! Restarting...");
                 timerText.text = "0";
-                // Add remaining time to the score
-                // Implement restart logic here
+                gameOverUI.SetActive(true);
+          
+                
+                // Pass the current score to the game over canvas
+                
             }
         }
     }
@@ -68,7 +76,6 @@ public class timer_game2 : MonoBehaviour
             // Update the actual score after checking all boxes
             score += tempScoreIncrease;
             UpdateScoreText();
-
         }
 
         return allFilled;
@@ -86,6 +93,10 @@ public class timer_game2 : MonoBehaviour
         score += remainingScore;
         Debug.Log($"Remaining time converted to score: {remainingScore}");
         UpdateScoreText();
-        
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
