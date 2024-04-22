@@ -4266,7 +4266,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.56962
+  orthographic size: 4.6655498
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5107,8 +5107,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.90500003, y: 1}
-  m_AnchoredPosition: {x: 343.28506, y: 93.462074}
-  m_SizeDelta: {x: -612.5801, y: -173.69412}
+  m_AnchoredPosition: {x: 359.98, y: 144.2}
+  m_SizeDelta: {x: -544.9132, y: -249.9992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &641958026
 MonoBehaviour:
@@ -5123,7 +5123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.8396226, g: 0.16158772, b: 0.16158772, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5970,7 +5970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 321.98004, y: 59.770004}
+  m_AnchoredPosition: {x: 321.98004, y: 59}
   m_SizeDelta: {x: -615.0416, y: -173.69412}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &784152923
