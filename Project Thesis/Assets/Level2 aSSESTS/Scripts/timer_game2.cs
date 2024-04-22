@@ -25,6 +25,8 @@ public class timer_game2 : MonoBehaviour
     private int index;
     public float wordSpeed;
 
+    private float level2Score, level2HPS;
+
 
     public GameObject Continue;
     private bool introDialogueActive = true; // Track if intro dialogue is active
@@ -37,6 +39,7 @@ public class timer_game2 : MonoBehaviour
         WinUI.SetActive(false);
         introUI.SetActive(true);
 		StartCoroutine(StartDialogue());
+        level2HPS = 800;
 			
                 
     }
@@ -78,6 +81,8 @@ public class timer_game2 : MonoBehaviour
                 
             }
         }
+        PlayerPrefs.SetFloat("level2Score", level2Score);
+        PlayerPrefs.SetFloat("level2HPS", level2HPS);
     }
 
     bool AllBoxesFilled()
@@ -148,6 +153,7 @@ public class timer_game2 : MonoBehaviour
         // Convert remaining time to a score value
         int remainingScore = (int)(countdown * 10); // Example conversion, adjust as needed
         score += remainingScore;
+        level2Score = score;
         Debug.Log($"Remaining time converted to score: {remainingScore}");
         UpdateScoreText();
     }
@@ -165,6 +171,12 @@ public class timer_game2 : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void ContinuetoLevel3()
+    {
+        SceneManager.LoadSceneAsync(3); 
+    }
+
 
     
 }
