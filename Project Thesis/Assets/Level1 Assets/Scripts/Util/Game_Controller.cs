@@ -326,6 +326,7 @@ public class Game_Controller : MonoBehaviour
                 PhaseOneDialogues[1].SetActive(false);
                 PhaseOneDialogues[2].SetActive(false);
                 PhaseOneDialogues[3].SetActive(false);
+                PhaseOneDialogues[4].SetActive(false);
                 phase1TextIsDone = true;
                 phaDiaNum = 0;
                 Time.timeScale = 1f;

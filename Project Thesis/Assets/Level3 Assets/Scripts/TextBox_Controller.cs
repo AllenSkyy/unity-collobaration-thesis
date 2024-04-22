@@ -38,14 +38,14 @@ public class TextBox_Controller : MonoBehaviour
         seconds = Mathf.FloorToInt(timer); 
         if(dialogueNum <= 3)
         {
-            if(seconds > 300 && dialogueNum == 3){pauseGame();} // game ends
-            else if(seconds > 155 && dialogueNum == 2)
+            if(seconds > 150 && dialogueNum == 3){pauseGame();} // game ends
+            else if(seconds > 120 && dialogueNum == 2)
             {
                 pauseGame();
                 spawnobstacles.Adjustimebetweenspawn(0.5f);
                 cam.AdjustCamSpeed();
             } //obstacles appear more frequent and game gets faster
-            else if(seconds > 30 && dialogueNum == 1){pauseGame();} // obstacles appear
+            else if(seconds > 10 && dialogueNum == 1){pauseGame();} // obstacles appear
         }
         
         Debug.Log("Seconds is " + seconds+ " dialoguenum is "+ dialogueNum);
@@ -101,7 +101,6 @@ public class TextBox_Controller : MonoBehaviour
 
     public void ContinuetoResults()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadSceneAsync(4); 
     }
 }
