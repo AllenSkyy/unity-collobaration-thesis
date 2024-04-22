@@ -29,6 +29,8 @@ public class Game_Controller : MonoBehaviour
     bool phaseEndTextIsDone = false;
     int phaDiaNum = 0;
 
+    private float level1Score, level1HPS;
+
     private void Awake()
     {
         menuController = GetComponent<Menu_Controller>();
@@ -118,8 +120,8 @@ public class Game_Controller : MonoBehaviour
         }
         
 
-        Debug.Log("Phase is: " + phase);
-        Debug.Log("Phase3Seconds are: " + timerForPhase3);
+        PlayerPrefs.SetFloat("level1Score", level1Score);
+        PlayerPrefs.SetFloat("level1HPS", level1HPS);
 
     }
 
@@ -273,16 +275,20 @@ public class Game_Controller : MonoBehaviour
             if(answer == heightWeightGenerator.getAnswer())
             {
                 scoreController.addToScore(100);
+                level1Score += 100;
             }
             scoreController.addToTotal(100);
+            level1HPS += 100;
         }
         else if (phase == GamePhase.PhaseThree)
         {
             if(answer == heightWeightGenerator.getAnswer())
             {
                 scoreController.addToScore(200);
+                level1Score += 100;
             }
             scoreController.addToTotal(200);
+            level1HPS += 100;
         }
     }
 
@@ -293,8 +299,10 @@ public class Game_Controller : MonoBehaviour
             if(answer == "marked")
             {
                 scoreController.addToScore(100);
+                level1Score += 100;
             }
             scoreController.addToTotal(100);
+            level1HPS += 100;
         }
     }
 
