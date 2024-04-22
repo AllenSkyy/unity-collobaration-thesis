@@ -9,7 +9,9 @@ public class Truck_Controller : MonoBehaviour
     private Vector2 truckDirection;
 
     Score_Controller scoreController;
-
+    [SerializeField] GameObject[] CheckpointDios;
+    private int dialogueNum = 0;
+    private float level3Score, level3HPS;
     private void Awake()
     {
         scoreController = GetComponent<Score_Controller>();
@@ -18,6 +20,8 @@ public class Truck_Controller : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        scoreController.addToTotal(1000);
+        level3HPS += 1000;
     }
 
     // Update is called once per frame
@@ -25,6 +29,9 @@ public class Truck_Controller : MonoBehaviour
     {
         float directionY = Input.GetAxisRaw("Vertical");
         truckDirection = new Vector2(0, directionY).normalized;
+
+        PlayerPrefs.SetFloat("level3Score", level3Score);
+        PlayerPrefs.SetFloat("level3HPS", level3HPS);
     }
 
     void FixedUpdate()
@@ -37,10 +44,21 @@ public class Truck_Controller : MonoBehaviour
         if(collision.tag == "Checkpoint")
         {
             scoreController.addToScore(125);
+            level3Score += 125;
+            CheckpointDios[dialogueNum].SetActive(true);
+            Time.timeScale = 0f;
         }
         else if(collision.tag == "Obstacle")
         {
             scoreController.addToScore(-25);
+            level3Score -= 25;
         }
+   }
+
+   public void resumeGame()
+   {
+        CheckpointDios[dialogueNum].SetActive(false);
+        dialogueNum++;
+        Time.timeScale = 1f;
    }
 }

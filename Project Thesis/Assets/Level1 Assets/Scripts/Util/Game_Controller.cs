@@ -12,7 +12,8 @@ public class Game_Controller : MonoBehaviour
     Menu_Controller menuController;
     HeightWeightGenerator heightWeightGenerator;
     Score_Controller scoreController;
-    [SerializeField] GameObject child;
+    [SerializeField] GameObject child, endingPanel;
+    [SerializeField] GameObject[] PhaseOneDialogues, PhaseTwoDialogues, PhaseThreeDialogues, PhaseEndDialogues;
 
     float timer, timerForPhase3;
     int seconds, secondsPhase3;
@@ -21,6 +22,14 @@ public class Game_Controller : MonoBehaviour
     GameObject newChild;
     GameState state;
     GamePhase phase;
+
+    bool phase1TextIsDone = false;
+    bool phase2TextIsDone = false;
+    bool phase3TextIsDone = false;
+    bool phaseEndTextIsDone = false;
+    int phaDiaNum = 0;
+
+    private float level1Score, level1HPS;
 
     private void Awake()
     {
@@ -48,29 +57,71 @@ public class Game_Controller : MonoBehaviour
 
         if(phase == GamePhase.End)
         {
-            SceneManager.LoadSceneAsync(2);
+            if (!phaseEndTextIsDone)
+            {
+                Time.timeScale = 0f;
+                if(phaDiaNum == 0)
+                {
+                    NextPage();
+                }
+            }
+            else
+            {
+                endingPanel.SetActive(true);
+            }
         }
         else if(phase == GamePhase.PhaseThree)
         {
-            Debug.Log("Entering Difficulty 3");
-            timerForPhase3 += Time.deltaTime;
-            secondsPhase3 = Mathf.FloorToInt(timer % 60);
-            GamePhase3();
-
+            if (!phase3TextIsDone && state == GameState.Weighed)
+            {
+                Time.timeScale = 0f;
+                if(phaDiaNum == 0)
+                {
+                    NextPage();
+                }
+            }
+            else
+            {
+                timerForPhase3 += Time.deltaTime;
+                secondsPhase3 = Mathf.FloorToInt(timer % 60);
+                GamePhase3();
+            }
         }
         else if (phase == GamePhase.PhaseTwo)
         {
-            menuController.StartPhase2();
-            GamePhase2();
+            if (!phase2TextIsDone && state == GameState.Weighed)
+            {
+                Time.timeScale = 0f;
+                if(phaDiaNum == 0)
+                {
+                    NextPage();
+                }
+            }
+            else
+            {
+                menuController.StartPhase2();
+                GamePhase2();
+            }
         }
-        else
+        else 
         {
-            GamePhase1();
+            if (!phase1TextIsDone && state == GameState.Weighed)
+            {
+                Time.timeScale = 0f;
+                if(phaDiaNum == 0)
+                {
+                    NextPage();
+                }
+            }
+            else
+            {
+                GamePhase1();
+            }
         }
         
 
-        Debug.Log("Phase is: " + phase);
-        Debug.Log("Seconds are: " + seconds);
+        PlayerPrefs.SetFloat("level1Score", level1Score);
+        PlayerPrefs.SetFloat("level1HPS", level1HPS);
 
     }
 
@@ -126,7 +177,7 @@ public class Game_Controller : MonoBehaviour
             state = GameState.Weighed;
         }
 
-        // Check if 10 seconds have passed
+        // Check if 23 seconds have passed
         if (timerForPhase3 >= 23)
         {
             // Move the child away from the scale
@@ -195,7 +246,7 @@ public class Game_Controller : MonoBehaviour
                 Debug.Log("You have marked this child Stunted");
                 checkStunted("marked");
             }else{checkStunted("unmarked");}
-
+            timerForPhase3 = 0;
             heightWeightGenerator.ResetDisplay();
             menuController.ButtonOff();
             state = GameState.noState;
@@ -224,16 +275,20 @@ public class Game_Controller : MonoBehaviour
             if(answer == heightWeightGenerator.getAnswer())
             {
                 scoreController.addToScore(100);
+                level1Score += 100;
             }
             scoreController.addToTotal(100);
+            level1HPS += 100;
         }
         else if (phase == GamePhase.PhaseThree)
         {
             if(answer == heightWeightGenerator.getAnswer())
             {
                 scoreController.addToScore(200);
+                level1Score += 100;
             }
             scoreController.addToTotal(200);
+            level1HPS += 100;
         }
     }
 
@@ -244,8 +299,85 @@ public class Game_Controller : MonoBehaviour
             if(answer == "marked")
             {
                 scoreController.addToScore(100);
+                level1Score += 100;
             }
             scoreController.addToTotal(100);
+            level1HPS += 100;
+        }
+    }
+
+    public void GoToNextLevel()
+    {
+        SceneManager.LoadSceneAsync(2);
+    }
+
+    public void NextPage()
+    {
+        if(phase == GamePhase.PhaseOne)
+        {
+            if(phaDiaNum < PhaseOneDialogues.Length)
+            {
+                PhaseOneDialogues[phaDiaNum].SetActive(true);
+                phaDiaNum++;
+            }
+            else
+            {
+                PhaseOneDialogues[0].SetActive(false);
+                PhaseOneDialogues[1].SetActive(false);
+                PhaseOneDialogues[2].SetActive(false);
+                PhaseOneDialogues[3].SetActive(false);
+                phase1TextIsDone = true;
+                phaDiaNum = 0;
+                Time.timeScale = 1f;
+            }
+        }
+        else if(phase == GamePhase.PhaseTwo)
+        {
+            if(phaDiaNum < PhaseTwoDialogues.Length)
+            {
+                PhaseTwoDialogues[phaDiaNum].SetActive(true);
+                phaDiaNum++;
+            }
+            else
+            {
+                PhaseTwoDialogues[0].SetActive(false);
+                phase2TextIsDone = true;
+                phaDiaNum = 0;
+                Time.timeScale = 1f;
+            }
+        }
+        else if(phase == GamePhase.PhaseThree)
+        {
+            if(phaDiaNum < PhaseThreeDialogues.Length)
+            {
+                PhaseThreeDialogues[phaDiaNum].SetActive(true);
+                phaDiaNum++;
+            }
+            else
+            {
+                PhaseThreeDialogues[0].SetActive(false);
+                PhaseThreeDialogues[1].SetActive(false);
+                phase3TextIsDone = true;
+                phaDiaNum = 0;
+                Time.timeScale = 1f;
+            }
+        }
+        else if(phase == GamePhase.End)
+        {
+            if(phaDiaNum < PhaseEndDialogues.Length)
+            {
+                PhaseEndDialogues[phaDiaNum].SetActive(true);
+                phaDiaNum++;
+            }
+            else
+            {
+                PhaseEndDialogues[0].SetActive(false);
+                PhaseEndDialogues[1].SetActive(false);
+                PhaseEndDialogues[2].SetActive(false);
+                phaseEndTextIsDone = true;
+                phaDiaNum = 0;
+                Time.timeScale = 1f;
+            }
         }
     }
 }

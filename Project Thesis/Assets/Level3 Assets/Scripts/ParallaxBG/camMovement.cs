@@ -11,4 +11,9 @@ public class camMovement : MonoBehaviour
     {
         transform.position += new Vector3(camSpeed * Time.deltaTime, 0, 0);
     }
+
+    public void AdjustCamSpeed()
+   {
+        camSpeed = 15;
+   }
 }
