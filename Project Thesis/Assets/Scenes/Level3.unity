@@ -1595,7 +1595,7 @@ MonoBehaviour:
   maxY: 0
   minY: 0
   timeBetweenSpwan: 1.5
-  spawnTime: 150
+  spawnTime: 115
   multipleSpawns: 0
 --- !u!1 &197563636
 GameObject:
@@ -3116,7 +3116,7 @@ MonoBehaviour:
   maxY: 0
   minY: 0
   timeBetweenSpwan: 1.5
-  spawnTime: 80
+  spawnTime: 65
   multipleSpawns: 0
 --- !u!1 &485751173
 GameObject:
@@ -5382,7 +5382,7 @@ MonoBehaviour:
   maxY: 0
   minY: 0
   timeBetweenSpwan: 1.5
-  spawnTime: 10
+  spawnTime: 5
   multipleSpawns: 0
 --- !u!1 &695492644
 GameObject:
@@ -5434,7 +5434,7 @@ MonoBehaviour:
   maxY: 0.6
   minY: -1.4
   timeBetweenSpwan: 1.5
-  spawnTime: 30
+  spawnTime: 10
   multipleSpawns: 1
 --- !u!1 &719207847
 GameObject:
@@ -10654,7 +10654,7 @@ MonoBehaviour:
   maxY: 0
   minY: 0
   timeBetweenSpwan: 1.5
-  spawnTime: 290
+  spawnTime: 145
   multipleSpawns: 0
 --- !u!1 &1209429851
 GameObject:
