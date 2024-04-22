@@ -174,7 +174,7 @@ public class timer_game2 : MonoBehaviour
 
     public void ContinuetoLevel3()
     {
-        SceneManager.LoadSceneAsync(3); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 
