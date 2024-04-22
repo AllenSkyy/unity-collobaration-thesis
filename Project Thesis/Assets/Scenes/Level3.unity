@@ -9888,7 +9888,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: AH, looks like the roads aren't clear. hitting the obstacles damages the
-    truck. avoid them as much as you can!
+    truck. avoid them as much as you can! They actually make you lose points!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -12191,7 +12191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 378.4242, y: 188}
+  m_AnchoredPosition: {x: 440, y: 87.317}
   m_SizeDelta: {x: -1322.1617, y: -355.0338}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457725656
