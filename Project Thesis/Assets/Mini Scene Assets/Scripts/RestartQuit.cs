@@ -18,6 +18,10 @@ public class RestartQuit : MonoBehaviour
          #else
              Application.Quit();
          #endif
-            Debug.Log("Quit Game");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadSceneAsync(0);
     }
 }
