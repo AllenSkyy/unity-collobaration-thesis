@@ -19,14 +19,15 @@ public class TextBox_Controller : MonoBehaviour
 
     bool IsIntroDone;
 
-    private void Awake()
-    {
-        pauseGame();
-    }
+    //private void Awake()
+    //{
+     //   pauseGame();
+    //}
     // Start is called before the first frame update
     
     void Start()
     {
+        pauseGame();
         spawnobstacles = spawnpoint.GetComponent<Spawn_Obstacles>();
         cam = GetComponent<camMovement>();
     }

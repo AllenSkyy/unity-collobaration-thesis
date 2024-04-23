@@ -9888,7 +9888,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: AH, looks like the roads aren't clear. hitting the obstacles damages the
-    truck. avoid them as much as you can!
+    truck. avoid them as much as you can! They actually make you lose points!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -12191,8 +12191,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 546.79663, y: 146.37595}
-  m_SizeDelta: {x: -1203.0078, y: -355.0338}
+  m_AnchoredPosition: {x: 440, y: 87.317}
+  m_SizeDelta: {x: -1322.1617, y: -355.0338}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457725656
 MonoBehaviour:
@@ -12207,7 +12207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15328,8 +15328,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15413,7 +15413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.5917, y: -0.00001049}
+  m_AnchoredPosition: {x: 0.0000090599, y: 0}
   m_SizeDelta: {x: 291.1833, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2037403772
