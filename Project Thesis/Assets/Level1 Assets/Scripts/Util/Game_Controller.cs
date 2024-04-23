@@ -285,10 +285,10 @@ public class Game_Controller : MonoBehaviour
             if(answer == heightWeightGenerator.getAnswer())
             {
                 scoreController.addToScore(200);
-                level1Score += 100;
+                level1Score += 200;
             }
             scoreController.addToTotal(200);
-            level1HPS += 100;
+            level1HPS += 200;
         }
     }
 
