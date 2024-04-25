@@ -4290,7 +4290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.37, y: 0.21, z: -10}
+  m_LocalPosition: {x: -3.33, y: 0.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11707,7 +11707,7 @@ MonoBehaviour:
   - 'We also want to target malnutrition affecting the kids in the community. '
   - 'Anyways, the barangay health workers (BHWs) are a bit swamped and need all the
     help they can get! '
-  wordSpeed: 0.025
+  wordSpeed: 0.01
   Continue: {fileID: 648814986}
   GameController: {fileID: 1623431454}
 --- !u!1 &1703428795
