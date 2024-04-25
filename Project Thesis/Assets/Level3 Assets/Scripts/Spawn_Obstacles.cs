@@ -12,16 +12,24 @@ public class Spawn_Obstacles : MonoBehaviour
 
     public bool multipleSpawns;
     private bool SpawnAlready = false;
+    private float StartTime;
+
+    void Start()
+    {
+        StartTime = Time.time;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.time > spawnTime && multipleSpawns)
+        float elapsedTime = Time.time - StartTime;
+
+        if(elapsedTime > spawnTime && multipleSpawns)
         {
             Spawn();
-            spawnTime = Time.time + timeBetweenSpwan;
+            spawnTime = elapsedTime + timeBetweenSpwan;
         }
-        else if(Time.time > spawnTime)
+        else if(elapsedTime> spawnTime)
         {
             SpawnOnce();
         }

@@ -36,8 +36,8 @@ public class Results : MonoBehaviour
         level1ScoreText.text = string.Format("Level 1 Score: {0}/{1}", level1Score, level1HPS);
         level2ScoreText.text = string.Format("Level 2 Score: {0}/{1}", level2Score, level2HPS);
         level3ScoreText.text = string.Format("Level 3 Score: {0}/{1}", level3Score, level3HPS);
-        TotalText.text = string.Format("Total: {0}/{1}", totalScore, totalHPS);
-        RatingText.text = string.Format("Rating: {0}%", ratingScore);
+        TotalText.text = string.Format("Total:  {0}/{1}", totalScore, totalHPS);
+        RatingText.text = string.Format("Rating: {0}%", Mathf.RoundToInt(ratingScore));
 
         if(IsPassing())
         {
