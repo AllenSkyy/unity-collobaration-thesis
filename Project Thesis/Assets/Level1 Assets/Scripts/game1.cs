@@ -42,13 +42,35 @@ public class game1 : MonoBehaviour
 		if(index< dialogue.Length -1)
 		{
 			index++;
-			npctextbox.text ="";
-			StartCoroutine(Typing());
+			StopCoroutine(Typing());
+			npctextbox.text = dialogue[index];
 		}
 		else{
 			zeroText();
 		}
 	}
+
+
+
+//	    public void NextLine()
+//{
+//    Continue.SetActive(false);
+//
+//    if (index < dialogue.Length - 1)
+//    {
+//        index++;
+//        StopCoroutine("StartDialogue"); // Stop the coroutine if it's currently running
+//        npctextbox.text = dialogue[index];
+//        
+//        Continue.SetActive(true);
+//    }
+//    else
+//    {
+//        zeroText();
+//        introUI.SetActive(false);
+//        introDialogueActive = false;
+//    }
+//}
 	
 	public void zeroText(){
 		npctextbox.text ="";

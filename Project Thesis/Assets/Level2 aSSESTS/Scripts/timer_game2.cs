@@ -120,6 +120,7 @@ public class timer_game2 : MonoBehaviour
     public void zeroText(){
 		npctextbox.text ="";
 		index = 0;
+        StopCoroutine("StartDialogue");
 		
 	}
 
@@ -130,8 +131,9 @@ public class timer_game2 : MonoBehaviour
     if (index < dialogue.Length - 1)
     {
         index++;
-        npctextbox.text = "";
-        StartCoroutine(StartDialogue());
+        StopCoroutine("StartDialogue"); // Stop the coroutine if it's currently running
+        npctextbox.text = dialogue[index];
+        
         Continue.SetActive(true);
     }
     else
@@ -159,6 +161,10 @@ public class timer_game2 : MonoBehaviour
     }
 
     IEnumerator StartDialogue(){
+
+
+        yield return new WaitForSeconds(0.2f);
+
 		foreach(char letter in dialogue[index]. ToCharArray())
 		{
 			npctextbox.text += letter;
